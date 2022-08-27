@@ -1,3 +1,5 @@
+//QUESTION 2
+
 const apiKey = "b475160be7a048f190ac07a01264f668";
 const urlValidated = `https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating&key=${apiKey}`;
 
@@ -6,33 +8,35 @@ const loadContainer = document.querySelector(".loadContainer");
 
 async function getData () {
 
+    container.innerHTML = "loading...";
+
     try {
         const response = await fetch(urlValidated);
         const results = await response.json();
+        const games = results.results;
 
-        const gameResults = results.results;
+        container.innerHTML = "";
 
-        console.log(gameResults);
+            for (let i = 0; i < games.length; i++) {
 
-         /*for (i = 0; i = gameResults.length; i++) {
+                container.innerHTML += `<div class="gamecontainer">
+                                        <h2>${games[i].name}</h2>
+                                        <p>${games[i].rating}</p>
+                                        <p>${games[i].tags.length}</p>
+                                        </div>`;
 
-            console.log(gameResults[i].name);
+                if (i === 7) {
 
-            /*container.innerHTML += `<div>${gameResults[i]}</div>`;*/
+                    break;
 
-            /*if (i === 8) {
+                }
 
-                break;
-
-            }*/
-
+            }
+    }
     
+    catch (error) {
 
-        }
-
-    catch {
-
-        container.innerHTML = "An error occured";
+        container.innerHTML = "An error occured. contact helpdesk :)";
 
     }
 }
